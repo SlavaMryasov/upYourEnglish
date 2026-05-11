@@ -1,23 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import 'tailwindcss';
+@import 'tw-animate-css';
+
+
 
 @layer base {
-  *,
-  ::before,
-  ::after {
-    box-sizing: border-box;
-  }
-
-  html,
   body,
   #root {
     height: 100%;
     overflow: hidden;
-  }
-
-  html {
-    font-family: 'Inter', sans-serif;
-    color-scheme: dark;
   }
 
   button:not(:disabled),
@@ -30,4 +21,35 @@
   [role='button']:focus-visible {
     outline: none;
   }
+}
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+
+  --color-base-white: #ffffff;
+  --color-base-black: #181818;
+
+  --color-vue-25: #f3fcf7;
+  --color-vue-50: #e6faec;
+  --color-vue-100: #ccf5da;
+  --color-vue-200: #99ebb5;
+  --color-vue-300: #66e08f;
+  --color-vue-400: #42d392;
+  --color-vue-500: #42b883;
+  --color-vue-600: #369e6f;
+  --color-vue-700: #2a7e58;
+  --color-vue-800: #1f5e42;
+  --color-vue-900: #143f2c;
+
+  --color-error-25: #fffbfa;
+  --color-error-50: #fef3f2;
+  --color-error-100: #fee4e2;
+  --color-error-200: #fecdca;
+  --color-error-300: #fda29b;
+  --color-error-400: #f97066;
+  --color-error-500: #f04438;
+  --color-error-600: #d92d20;
+  --color-error-700: #b42318;
+  --color-error-800: #912018;
+  --color-error-900: #7a271a;
 }

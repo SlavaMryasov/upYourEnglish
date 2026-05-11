@@ -1,10 +1,10 @@
 import type { Word } from '@entities/word'
 import { useQuery } from '@pinia/colada'
-import { requireDocId } from '@shared/config'
+import { env, requireDocId } from '@shared/config'
 import { parseVocabDoc } from '@shared/lib'
 
 const fetchVocab = async (): Promise<Word[]> => {
-  const docId = requireDocId()
+  const docId = requireDocId(env.vocabDocId, 'VITE_VOCAB_DOC_ID')
   const url = import.meta.env.DEV
     ? `/gdoc/document/d/${docId}/export?format=txt`
     : `https://docs.google.com/document/d/${docId}/export?format=txt`

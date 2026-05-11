@@ -9,4 +9,5 @@ export {
   type ScheduleResult,
 } from './buildSchedule'
 export { cn } from './cn'
+export { parseSentencesDoc } from './parseSentencesDoc'
 export { parseVocabDoc } from './parseVocabDoc'

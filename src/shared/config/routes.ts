@@ -3,6 +3,7 @@ export const routes = {
   cards: '/cards',
   plan: '/plan',
   builder: '/builder',
+  game: '/game',
   allWords: '/all-words',
   learned: '/learned',
   unlearned: '/unlearned',

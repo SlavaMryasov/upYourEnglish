@@ -1,6 +1,7 @@
 export { CardsPage } from './cards'
 export { PlanPage } from './plan'
 export { BuilderPage } from './builder'
+export { GamePage } from './game'
 export { AllWordsPage } from './allWords'
 export { LearnedWordsPage } from './learnedWords'
 export { UnlearnedWordsPage } from './unlearnedWords'

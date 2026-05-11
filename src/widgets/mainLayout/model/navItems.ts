@@ -12,4 +12,5 @@ export const navItems: NavItem[] = [
   { label: 'Выученные', to: routes.learned },
   { label: 'Невыученные', to: routes.unlearned },
   { label: 'Все слова', to: routes.allWords },
+  { label: 'Дикий шарик', to: routes.game },
 ]

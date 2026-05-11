@@ -1,0 +1,5 @@
+export { CardsPage } from './cards'
+export { AllWordsPage } from './allWords'
+export { LearnedWordsPage } from './learnedWords'
+export { UnlearnedWordsPage } from './unlearnedWords'
+export { NotFoundPage } from './notFound'

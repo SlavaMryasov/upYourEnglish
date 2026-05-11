@@ -19,7 +19,7 @@ defineProps<{
 <template>
   <DialogRoot>
     <DialogTrigger
-      class="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-vue-500 bg-vue-500/15 text-base font-bold text-vue-400 transition hover:bg-vue-500 hover:text-slate-950"
+      class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 border-vue-500 bg-vue-500/15 text-base font-bold text-vue-400 transition hover:bg-vue-500 hover:text-slate-950"
       aria-label="Info"
     >
       ⓘ

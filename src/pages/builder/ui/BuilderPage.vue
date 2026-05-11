@@ -176,10 +176,10 @@ const refetchBoth = () => {
 
         <SelectRoot :model-value="selectedDay" @update:model-value="applyDay">
           <SelectTrigger
-            class="flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
+            class="group flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
           >
             <SelectValue placeholder="Выбрать по дню расписания…" />
-            <SelectIcon class="text-slate-500">▼</SelectIcon>
+            <SelectIcon class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</SelectIcon>
           </SelectTrigger>
           <SelectPortal>
             <SelectContent
@@ -283,7 +283,7 @@ const refetchBoth = () => {
 
     <div
       v-if="!isExercising && totalTasks > 0"
-      class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-800 bg-slate-900/95 p-4 backdrop-blur"
+      class="fixed inset-x-0 bottom-14 z-30 border-t border-slate-800 bg-slate-900/95 p-4 backdrop-blur md:bottom-0"
     >
       <button
         type="button"

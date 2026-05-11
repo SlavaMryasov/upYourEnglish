@@ -6,8 +6,9 @@ export type NavItem = {
 }
 
 export const navItems: NavItem[] = [
-  { label: 'Cards', to: routes.cards },
-  { label: 'All words', to: routes.allWords },
-  { label: 'Learned', to: routes.learned },
-  { label: 'Unlearned', to: routes.unlearned },
+  { label: 'Карточки', to: routes.cards },
+  { label: 'План', to: routes.plan },
+  { label: 'Выученные', to: routes.learned },
+  { label: 'Невыученные', to: routes.unlearned },
+  { label: 'Все слова', to: routes.allWords },
 ]

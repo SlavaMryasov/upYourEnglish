@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TENSE_LABELS, type Tense } from '@entities/sentence'
+import { findTenseByCode, TenseSchema } from '@entities/tense'
 import { cn } from '@shared/lib'
 import { computed, ref, watch } from 'vue'
 
@@ -66,10 +67,24 @@ const showAnswer = () => {
   shuffled.value = []
   showResult.value = 'correct'
 }
+
+const isHintShown = ref(false)
+const toggleHint = () => {
+  isHintShown.value = !isHintShown.value
+}
+
+const tenseInfo = computed(() => findTenseByCode(props.tense))
+
+watch(
+  () => props.tense,
+  () => {
+    isHintShown.value = false
+  },
+)
 </script>
 
 <template>
-  <div class="flex h-full flex-col gap-4 p-4">
+  <div class="flex h-full flex-col gap-4 overflow-y-auto p-4 pb-28 md:pb-4">
     <header class="flex items-center justify-between text-sm text-slate-400">
       <span class="font-medium tabular-nums">{{ position }} / {{ total }}</span>
       <span class="tracking-wide text-vue-400 uppercase">{{ TENSE_LABELS[tense] }}</span>
@@ -124,6 +139,42 @@ const showAnswer = () => {
           {{ tile.token }}
         </button>
       </div>
+    </div>
+
+    <button
+      type="button"
+      class="self-start rounded-md border border-vue-500/50 bg-vue-500/10 px-3 py-1.5 text-xs font-semibold text-vue-400 hover:bg-vue-500/20"
+      @click="toggleHint"
+    >
+      {{ isHintShown ? 'Скрыть грамматику' : 'Грамматика' }}
+    </button>
+
+    <div
+      v-if="isHintShown && tenseInfo"
+      class="space-y-2 rounded-md border border-slate-800 bg-slate-900 p-3 text-sm"
+    >
+      <div class="flex items-center justify-between gap-3">
+        <div class="space-y-0.5">
+          <div class="font-semibold text-vue-400">{{ tenseInfo.name }}</div>
+          <div class="text-xs text-slate-500">{{ tenseInfo.nameRu }}</div>
+        </div>
+        <TenseSchema :group="tenseInfo.group" :aspect="tenseInfo.aspect" />
+      </div>
+      <dl class="space-y-1 text-xs">
+        <div>
+          <dt class="inline text-slate-500">Утверждение: </dt>
+          <dd class="inline font-mono text-slate-200">{{ tenseInfo.affirmative }}</dd>
+        </div>
+        <div>
+          <dt class="inline text-slate-500">Отрицание: </dt>
+          <dd class="inline font-mono text-slate-200">{{ tenseInfo.negative }}</dd>
+        </div>
+        <div>
+          <dt class="inline text-slate-500">Вопрос: </dt>
+          <dd class="inline font-mono text-slate-200">{{ tenseInfo.question }}</dd>
+        </div>
+      </dl>
+      <p class="text-xs text-slate-300">{{ tenseInfo.when }}</p>
     </div>
 
     <div v-if="showResult === 'wrong'" class="text-sm text-error-400">

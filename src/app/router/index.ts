@@ -6,6 +6,7 @@ import {
   LearnedWordsPage,
   NotFoundPage,
   PlanPage,
+  TensesPage,
   UnlearnedWordsPage,
 } from '@pages/index'
 import { routes } from '@shared/config'
@@ -16,6 +17,7 @@ const routeRecords: RouteRecordRaw[] = [
   { path: routes.cards, component: CardsPage },
   { path: routes.plan, component: PlanPage },
   { path: routes.builder, component: BuilderPage },
+  { path: routes.tenses, component: TensesPage },
   { path: routes.game, component: GamePage },
   { path: routes.allWords, component: AllWordsPage },
   { path: routes.learned, component: LearnedWordsPage },

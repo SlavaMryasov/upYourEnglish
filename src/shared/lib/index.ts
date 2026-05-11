@@ -10,4 +10,10 @@ export {
 } from './buildSchedule'
 export { cn } from './cn'
 export { parseSentencesDoc } from './parseSentencesDoc'
+export {
+  parseTenseExamplesDoc,
+  type TenseExampleLine,
+  type TenseExampleSet,
+  type TenseExamplesIndex,
+} from './parseTenseExamplesDoc'
 export { parseVocabDoc } from './parseVocabDoc'

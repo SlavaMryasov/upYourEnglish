@@ -1,6 +1,7 @@
 export const env = {
   vocabDocId: import.meta.env.VITE_VOCAB_DOC_ID ?? '',
   sentencesDocId: import.meta.env.VITE_SENTENCES_DOC_ID ?? '',
+  tenseExamplesDocId: import.meta.env.VITE_TENSE_EXAMPLES_DOC_ID ?? '',
 }
 
 export const requireDocId = (id: string, name: string): string => {

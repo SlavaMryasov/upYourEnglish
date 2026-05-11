@@ -7,9 +7,7 @@ declare module '*.vue' {
 }
 
 interface ImportMetaEnv {
-  readonly VITE_VOCAB_DOC_ALL_ID: string
-  readonly VITE_VOCAB_DOC_LEARNED_ID: string
-  readonly VITE_VOCAB_DOC_UNLEARNED_ID: string
+  readonly VITE_VOCAB_DOC_ID: string
 }
 
 interface ImportMeta {

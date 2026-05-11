@@ -75,10 +75,10 @@ const backToSetup = () => {
           <span class="text-sm text-slate-400">Количество блоков</span>
           <SelectRoot v-model="gridSize">
             <SelectTrigger
-              class="flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
+              class="group flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
             >
               <SelectValue />
-              <SelectIcon class="text-slate-500">▼</SelectIcon>
+              <SelectIcon class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</SelectIcon>
             </SelectTrigger>
             <SelectPortal>
               <SelectContent
@@ -106,10 +106,10 @@ const backToSetup = () => {
           <span class="text-sm text-slate-400">Сложность</span>
           <SelectRoot v-model="difficulty">
             <SelectTrigger
-              class="flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
+              class="group flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
             >
               <SelectValue />
-              <SelectIcon class="text-slate-500">▼</SelectIcon>
+              <SelectIcon class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</SelectIcon>
             </SelectTrigger>
             <SelectPortal>
               <SelectContent
@@ -140,10 +140,10 @@ const backToSetup = () => {
           </span>
           <SelectRoot v-model="pattern" :disabled="!canPattern">
             <SelectTrigger
-              class="flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500 disabled:cursor-not-allowed"
+              class="group flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500 disabled:cursor-not-allowed"
             >
               <SelectValue />
-              <SelectIcon class="text-slate-500">▼</SelectIcon>
+              <SelectIcon class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</SelectIcon>
             </SelectTrigger>
             <SelectPortal>
               <SelectContent

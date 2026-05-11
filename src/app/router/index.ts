@@ -1,5 +1,6 @@
 import {
   AllWordsPage,
+  BuilderPage,
   CardsPage,
   LearnedWordsPage,
   NotFoundPage,
@@ -13,6 +14,7 @@ const routeRecords: RouteRecordRaw[] = [
   { path: routes.root, redirect: routes.cards },
   { path: routes.cards, component: CardsPage },
   { path: routes.plan, component: PlanPage },
+  { path: routes.builder, component: BuilderPage },
   { path: routes.allWords, component: AllWordsPage },
   { path: routes.learned, component: LearnedWordsPage },
   { path: routes.unlearned, component: UnlearnedWordsPage },

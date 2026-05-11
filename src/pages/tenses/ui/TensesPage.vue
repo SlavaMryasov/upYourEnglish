@@ -28,13 +28,13 @@ import {
   TENSE_GROUPS,
   TENSES,
   tenseCodeOf,
+  TenseSchema,
   type ResolvedTenseExamples,
   type Tense,
   type TenseAspect,
   type TenseGroup,
-} from '../model/tensesData'
+} from '@entities/tense'
 import TenseCard from './TenseCard.vue'
-import TenseSchema from './TenseSchema.vue'
 
 type ViewMode = 'tense' | 'aspect'
 type AspectFilter = TenseAspect | 'all'
@@ -175,10 +175,10 @@ const openTense = (tense: Tense) => {
       <div v-if="viewMode === 'tense'" class="md:hidden">
         <SelectRoot v-model="aspectFilter">
           <SelectTrigger
-            class="flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
+            class="group flex w-full items-center justify-between gap-2 rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
           >
             <SelectValue placeholder="Все" />
-            <SelectIcon class="text-slate-500">▼</SelectIcon>
+            <SelectIcon class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</SelectIcon>
           </SelectTrigger>
           <SelectPortal>
             <SelectContent

@@ -16,6 +16,9 @@ export const tenseCodeOf = (group: TenseGroup, aspect: TenseAspect): SentenceTen
   return `${group}_${aspectPart}` as SentenceTense
 }
 
+export const findTenseByCode = (code: SentenceTense): Tense | undefined =>
+  TENSES.find((tense) => tenseCodeOf(tense.group, tense.aspect) === code)
+
 export type Tense = {
   group: TenseGroup
   aspect: TenseAspect

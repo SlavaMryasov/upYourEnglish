@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { ResolvedTenseExamples, Tense } from '../model/tensesData'
-import TenseSchema from './TenseSchema.vue'
+import { TenseSchema, type ResolvedTenseExamples, type Tense } from '@entities/tense'
 
 defineProps<{
   tense: Tense

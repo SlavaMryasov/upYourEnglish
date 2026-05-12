@@ -204,40 +204,33 @@ const refetch = () => {
       </div>
 
       <template v-else>
-        <div class="inline-flex self-start rounded-md border border-slate-700 bg-slate-900 p-0.5 text-sm">
-          <button
-            type="button"
-            class="rounded px-3 py-1.5 transition"
-            :class="
-              viewMode === 'list'
-                ? 'bg-slate-700 text-slate-50'
-                : 'text-slate-400 hover:text-slate-200'
-            "
-            @click="setMode('list')"
-          >
-            Список
-          </button>
-          <button
-            type="button"
-            class="rounded px-3 py-1.5 transition"
-            :class="
-              viewMode === 'cards'
-                ? 'bg-slate-700 text-slate-50'
-                : 'text-slate-400 hover:text-slate-200'
-            "
-            @click="setMode('cards')"
-          >
-            Карточки
-          </button>
-        </div>
-
-        <div class="space-y-3">
-          <input
-            v-model="query"
-            type="search"
-            placeholder="Поиск по форме или переводу…"
-            class="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus-visible:border-vue-500"
-          >
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="inline-flex rounded-md border border-slate-700 bg-slate-900 p-0.5 text-sm">
+            <button
+              type="button"
+              class="rounded px-3 py-1.5 transition"
+              :class="
+                viewMode === 'list'
+                  ? 'bg-slate-700 text-slate-50'
+                  : 'text-slate-400 hover:text-slate-200'
+              "
+              @click="setMode('list')"
+            >
+              Список
+            </button>
+            <button
+              type="button"
+              class="rounded px-3 py-1.5 transition"
+              :class="
+                viewMode === 'cards'
+                  ? 'bg-slate-700 text-slate-50'
+                  : 'text-slate-400 hover:text-slate-200'
+              "
+              @click="setMode('cards')"
+            >
+              Карточки
+            </button>
+          </div>
 
           <PopoverRoot>
             <PopoverTrigger
@@ -303,6 +296,14 @@ const refetch = () => {
             </PopoverPortal>
           </PopoverRoot>
         </div>
+
+        <input
+          v-if="viewMode === 'list'"
+          v-model="query"
+          type="search"
+          placeholder="Поиск по форме или переводу…"
+          class="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus-visible:border-vue-500"
+        >
 
         <div
           v-if="filtered.length === 0"

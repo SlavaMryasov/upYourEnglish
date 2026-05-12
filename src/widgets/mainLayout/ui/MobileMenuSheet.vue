@@ -8,7 +8,7 @@ import {
   DialogTitle,
   VisuallyHidden,
 } from 'reka-ui'
-import { navItems } from '../model/navItems'
+import { bottomNavItems, navItems } from '../model/navItems'
 </script>
 
 <template>
@@ -32,9 +32,27 @@ import { navItems } from '../model/navItems'
         <RouterLink
           :to="item.to"
           active-class="bg-vue-500/10 text-vue-400"
-          class="rounded-md px-4 py-3 text-base text-slate-300 hover:bg-slate-800 hover:text-slate-50"
+          class="flex items-center gap-3 rounded-md px-4 py-3 text-base text-slate-300 hover:bg-slate-800 hover:text-slate-50"
         >
-          {{ item.label }}
+          <component :is="item.icon" class="h-5 w-5 shrink-0" :stroke-width="1.75" />
+          <span>{{ item.label }}</span>
+        </RouterLink>
+      </DialogClose>
+
+      <div class="h-12" aria-hidden="true" />
+
+      <DialogClose
+        v-for="item in bottomNavItems"
+        :key="item.to"
+        as-child
+      >
+        <RouterLink
+          :to="item.to"
+          active-class="bg-vue-500/10 text-vue-400"
+          class="flex items-center gap-3 rounded-md px-4 py-3 text-base text-slate-300 hover:bg-slate-800 hover:text-slate-50"
+        >
+          <component :is="item.icon" class="h-5 w-5 shrink-0" :stroke-width="1.75" />
+          <span>{{ item.label }}</span>
         </RouterLink>
       </DialogClose>
     </DialogContent>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { navItems } from '../model/navItems';
+import { bottomNavItems, navItems } from '../model/navItems'
 </script>
 
 <template>
@@ -18,9 +18,23 @@ import { navItems } from '../model/navItems';
         :key="item.to"
         :to="item.to"
         active-class="bg-vue-500/10 text-vue-400"
-        class="rounded-md px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-slate-50"
+        class="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-slate-50"
       >
-        {{ item.label }}
+        <component :is="item.icon" class="h-4 w-4 shrink-0" :stroke-width="1.75" />
+        <span>{{ item.label }}</span>
+      </RouterLink>
+
+      <div class="h-9" aria-hidden="true" />
+
+      <RouterLink
+        v-for="item in bottomNavItems"
+        :key="item.to"
+        :to="item.to"
+        active-class="bg-vue-500/10 text-vue-400"
+        class="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-slate-300 transition hover:bg-slate-800 hover:text-slate-50"
+      >
+        <component :is="item.icon" class="h-4 w-4 shrink-0" :stroke-width="1.75" />
+        <span>{{ item.label }}</span>
       </RouterLink>
     </nav>
   </aside>

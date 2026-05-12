@@ -10,6 +10,12 @@ import { REQUIRED_VERB_STREAK, useVerbProgressStore } from '@features/verbProgre
 import { useIrregularVerbsQuery } from '@shared/api'
 import { ConfirmDialog, PageInfo } from '@shared/ui'
 import { BottomControls } from '@widgets/bottomControls'
+import {
+  PopoverContent,
+  PopoverPortal,
+  PopoverRoot,
+  PopoverTrigger,
+} from 'reka-ui'
 import { computed, ref, useTemplateRef, watch } from 'vue'
 import VerbCard from './VerbCard.vue'
 import VerbsList from './VerbsList.vue'
@@ -48,14 +54,9 @@ const filtered = computed<IrregularVerb[]>(() => {
   })
 })
 
-const CARD_COUNT_OPTIONS = [
-  { value: '10', label: '10' },
-  { value: '20', label: '20' },
-  { value: '30', label: '30' },
-  { value: '50', label: '50' },
-  { value: '100', label: '100' },
-  { value: 'all', label: 'Все' },
-] as const
+const CARD_COUNT_OPTIONS = (
+  ['10', '20', '30', '50', '100', 'all'] as const
+).map((value) => ({ value, label: value === 'all' ? 'Все' : value }))
 
 const cardCountKey = ref<string>('20')
 const cardCount = computed<number | 'all'>(() =>
@@ -238,30 +239,69 @@ const refetch = () => {
             class="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus-visible:border-vue-500"
           >
 
-          <div class="flex flex-wrap gap-2">
-            <label
-              v-for="freq in VERB_FREQUENCIES"
-              :key="freq"
-              class="flex cursor-pointer items-center gap-2 rounded-md border bg-slate-900 px-3 py-1.5 text-xs transition"
-              :class="
-                selectedFreqs[freq]
-                  ? 'border-vue-500 text-slate-100'
-                  : 'border-slate-700 text-slate-400'
-              "
+          <PopoverRoot>
+            <PopoverTrigger
+              class="group flex items-center gap-2 self-start rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
             >
-              <input
-                type="checkbox"
-                :checked="!!selectedFreqs[freq]"
-                class="h-4 w-4 accent-vue-500"
-                @change="toggleFreq(freq)"
+              <span>Настройки</span>
+              <span class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</span>
+            </PopoverTrigger>
+            <PopoverPortal>
+              <PopoverContent
+                :side-offset="6"
+                align="start"
+                class="z-50 w-[min(calc(100vw-2rem),320px)] rounded-md border border-slate-600 bg-slate-800 p-4 shadow-2xl shadow-black/60 ring-1 ring-black/30"
               >
-              <span>{{ VERB_FREQUENCY_LABELS[freq] }}</span>
-            </label>
-          </div>
-
-          <p class="text-xs text-slate-500">
-            Найдено {{ filtered.length }} из {{ verbs.length }}
-          </p>
+                <div class="space-y-4">
+                  <div class="space-y-2">
+                    <div class="text-[10px] tracking-wide text-slate-500 uppercase">Частотность</div>
+                    <div class="flex flex-wrap gap-2">
+                      <label
+                        v-for="freq in VERB_FREQUENCIES"
+                        :key="freq"
+                        class="flex cursor-pointer items-center gap-2 rounded-md border bg-slate-900 px-3 py-1.5 text-xs transition"
+                        :class="
+                          selectedFreqs[freq]
+                            ? 'border-vue-500 text-slate-100'
+                            : 'border-slate-700 text-slate-400'
+                        "
+                      >
+                        <input
+                          type="checkbox"
+                          :checked="!!selectedFreqs[freq]"
+                          class="h-4 w-4 accent-vue-500"
+                          @change="toggleFreq(freq)"
+                        >
+                        <span>{{ VERB_FREQUENCY_LABELS[freq] }}</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="text-xs text-slate-400">
+                    Найдено {{ filtered.length }} из {{ verbs.length }}
+                  </div>
+                  <div v-if="viewMode === 'cards'" class="space-y-2">
+                    <div class="text-[10px] tracking-wide text-slate-500 uppercase">Колода</div>
+                    <div class="flex flex-wrap gap-2">
+                      <button
+                        v-for="option in CARD_COUNT_OPTIONS"
+                        :key="option.value"
+                        type="button"
+                        class="rounded-md border bg-slate-900 px-2.5 py-1 text-xs transition"
+                        :class="
+                          cardCountKey === option.value
+                            ? 'border-vue-500 text-vue-400'
+                            : 'border-slate-700 text-slate-400 hover:text-slate-200'
+                        "
+                        @click="cardCountKey = option.value"
+                      >
+                        {{ option.label }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </PopoverContent>
+            </PopoverPortal>
+          </PopoverRoot>
         </div>
 
         <div
@@ -274,24 +314,6 @@ const refetch = () => {
         <VerbsList v-else-if="viewMode === 'list'" :verbs="filtered" />
 
         <template v-else>
-          <div class="flex flex-wrap items-center gap-2 text-xs">
-            <span class="text-slate-500">Колода:</span>
-            <button
-              v-for="option in CARD_COUNT_OPTIONS"
-              :key="option.value"
-              type="button"
-              class="rounded-md border bg-slate-900 px-2.5 py-1 transition"
-              :class="
-                cardCountKey === option.value
-                  ? 'border-vue-500 text-vue-400'
-                  : 'border-slate-700 text-slate-400 hover:text-slate-200'
-              "
-              @click="cardCountKey = option.value"
-            >
-              {{ option.label }}
-            </button>
-          </div>
-
           <div class="flex items-center justify-between gap-2 text-sm text-slate-400">
             <span class="font-medium tabular-nums">
               <template v-if="activeDeck.length > 0">

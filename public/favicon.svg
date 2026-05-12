@@ -1,0 +1,18 @@
+<svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="greenGradient" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#5DCC9A"/>
+      <stop offset="100%" stop-color="#369E6F"/>
+    </linearGradient>
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+  </defs>
+
+  <path d="M51 31 H191 V63 H83 V105 H191 V137 H83 V179 H191 V211 H51 Z"
+        fill="#475569"/>
+
+  <path d="M65 45 H205 V77 H97 V119 H205 V151 H97 V193 H205 V225 H65 Z"
+        fill="url(#greenGradient)"
+        filter="url(#softShadow)"/>
+</svg>

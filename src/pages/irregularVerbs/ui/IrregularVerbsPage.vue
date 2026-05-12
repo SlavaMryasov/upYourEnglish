@@ -234,7 +234,7 @@ const refetch = () => {
 
           <PopoverRoot>
             <PopoverTrigger
-              class="group flex items-center gap-2 self-start rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-xs text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
+              class="group flex items-center gap-2 self-start rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-200 hover:bg-slate-800 focus-visible:border-vue-500"
             >
               <span>Настройки</span>
               <span class="text-slate-500 transition-transform group-data-[state=open]:rotate-180">▼</span>

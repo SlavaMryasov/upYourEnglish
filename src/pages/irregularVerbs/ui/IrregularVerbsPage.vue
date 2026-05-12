@@ -167,9 +167,9 @@ const refetch = () => {
 </script>
 
 <template>
-  <div class="h-full overflow-hidden">
+  <div class="h-full overflow-y-auto md:overflow-hidden">
     <div
-      class="mx-auto flex h-full max-w-4xl flex-col gap-4 overflow-hidden p-4 pb-20 sm:p-6 sm:pb-20 md:pb-6"
+      class="mx-auto flex max-w-4xl flex-col gap-4 p-4 pb-20 sm:p-6 sm:pb-20 md:h-full md:overflow-hidden md:pb-6"
     >
       <header class="flex items-start justify-between gap-3">
         <div class="space-y-1">
@@ -329,7 +329,7 @@ const refetch = () => {
             </div>
           </div>
 
-          <div class="flex flex-1 items-center justify-center">
+          <div class="flex items-center justify-center md:flex-1">
             <div class="w-full max-w-[380px]">
               <div
                 v-if="activeDeck.length === 0 && deck.length > 0"

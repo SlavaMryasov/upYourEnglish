@@ -78,7 +78,7 @@ useFlashcardKeyboard({
     Док пустой или формат не распознан
   </div>
 
-  <div v-else class="flex h-full flex-col">
+  <div v-else class="flex h-full flex-col pb-14 md:pb-0">
     <div class="flex items-center gap-2 border-b border-slate-800 px-4 py-2">
       <h1 class="flex-1 text-sm font-semibold tracking-wide text-slate-300 uppercase">Карточки</h1>
       <button

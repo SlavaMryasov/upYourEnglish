@@ -21,7 +21,7 @@ const grouped = computed(() =>
 
 <template>
   <div
-    class="flex-1 space-y-4 overflow-y-auto rounded-lg border border-slate-800 bg-slate-950/40 p-3 shadow-inner shadow-slate-950/50"
+    class="max-h-[60vh] space-y-4 overflow-y-auto rounded-lg border border-slate-800 bg-slate-950/40 p-3 shadow-inner shadow-slate-950/50 md:max-h-none md:min-h-0 md:flex-1"
   >
     <section v-for="group in grouped" :key="group.freq" class="space-y-2">
       <h2

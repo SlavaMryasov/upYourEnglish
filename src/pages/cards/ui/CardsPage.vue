@@ -116,7 +116,7 @@ useFlashcardKeyboard({
           <div class="text-xl font-semibold">Готово</div>
           <div class="text-sm text-slate-500">Все {{ deckWords.length }} слов закрыты</div>
         </div>
-        <div v-else class="w-full max-w-[280px] max-h-full sm:max-w-[340px]">
+        <div v-else class="w-full max-w-[220px] max-h-full sm:max-w-[300px] md:max-w-[340px]">
           <FlashCard
             v-if="currentWord"
             ref="flashCard"

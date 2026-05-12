@@ -104,7 +104,7 @@ useFlashcardKeyboard({
     <template v-else>
       <CardsHeader :completed="completedCount" :total="deckWords.length" />
 
-      <div class="flex flex-1 items-center justify-center p-4">
+      <div class="flex min-h-0 flex-1 items-center justify-center p-4">
         <div v-if="deckWords.length === 0" class="text-sm text-slate-400">
           В этой колоде ничего нет
         </div>
@@ -116,7 +116,7 @@ useFlashcardKeyboard({
           <div class="text-xl font-semibold">Готово</div>
           <div class="text-sm text-slate-500">Все {{ deckWords.length }} слов закрыты</div>
         </div>
-        <div v-else class="w-full max-w-[380px]">
+        <div v-else class="w-full max-w-[280px] max-h-full sm:max-w-[340px]">
           <FlashCard
             v-if="currentWord"
             ref="flashCard"

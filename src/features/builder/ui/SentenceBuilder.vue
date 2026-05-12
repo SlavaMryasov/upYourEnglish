@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { TENSE_LABELS, type Tense } from '@entities/sentence'
+import {
+  SENTENCE_FORM_LABELS,
+  TENSE_LABELS,
+  type SentenceForm,
+  type Tense,
+} from '@entities/sentence'
 import { findTenseByCode, TenseSchema } from '@entities/tense'
 import { cn } from '@shared/lib'
 import { computed, ref, watch } from 'vue'
@@ -8,10 +13,17 @@ const props = defineProps<{
   ruText: string
   enText: string
   tense: Tense
+  form: SentenceForm
   wordEn: string
   position: number
   total: number
 }>()
+
+const FORM_BADGE: Record<SentenceForm, string> = {
+  affirmative: '+',
+  negative: '−',
+  question: '?',
+}
 
 const emit = defineEmits<{
   next: []
@@ -85,9 +97,14 @@ watch(
 
 <template>
   <div class="flex h-full flex-col gap-4 overflow-y-auto p-4 pb-28 md:pb-4">
-    <header class="flex items-center justify-between text-sm text-slate-400">
+    <header class="flex items-center justify-between gap-2 text-sm text-slate-400">
       <span class="font-medium tabular-nums">{{ position }} / {{ total }}</span>
-      <span class="tracking-wide text-vue-400 uppercase">{{ TENSE_LABELS[tense] }}</span>
+      <div class="flex flex-col items-center gap-0.5 text-center">
+        <span class="tracking-wide text-vue-400 uppercase">{{ TENSE_LABELS[tense] }}</span>
+        <span class="text-[10px] tracking-wide text-slate-500 uppercase">
+          {{ FORM_BADGE[form] }} {{ SENTENCE_FORM_LABELS[form] }}
+        </span>
+      </div>
       <button
         type="button"
         class="rounded-md border border-slate-700 px-2 py-1 text-xs text-slate-400 hover:bg-slate-800"

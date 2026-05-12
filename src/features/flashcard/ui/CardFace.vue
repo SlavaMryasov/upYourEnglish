@@ -16,12 +16,7 @@ defineProps<{
 
 <template>
   <div
-    :class="
-      cn(
-        'absolute inset-0 flex flex-col rounded-2xl border border-slate-800 bg-slate-900 p-6 text-left shadow-xl backface-hidden',
-        back ? 'rotate-y-180' : '',
-      )
-    "
+    class="flex h-full flex-col rounded-2xl border border-slate-800 bg-slate-900 p-6 text-left shadow-xl"
   >
     <div class="flex items-center justify-between text-xs text-slate-500">
       <span class="font-medium tabular-nums">{{ position }} / {{ total }}</span>
@@ -32,9 +27,7 @@ defineProps<{
         :class="
           cn(
             'font-bold break-words',
-            back
-              ? 'text-3xl text-slate-100 md:text-4xl'
-              : 'text-4xl text-vue-400 md:text-5xl',
+            back ? 'text-3xl text-slate-100 md:text-4xl' : 'text-4xl text-vue-400 md:text-5xl',
           )
         "
       >

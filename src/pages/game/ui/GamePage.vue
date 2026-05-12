@@ -84,14 +84,14 @@ const backToSetup = () => {
               <SelectContent
                 position="popper"
                 :side-offset="6"
-                class="z-50 min-w-[var(--reka-select-trigger-width)] overflow-hidden rounded-md border border-slate-700 bg-slate-900 shadow-xl"
+                class="z-50 min-w-[var(--reka-select-trigger-width)] overflow-hidden rounded-md border border-slate-600 bg-slate-800 shadow-2xl shadow-black/60 ring-1 ring-black/30"
               >
                 <SelectViewport class="p-1">
                   <SelectItem
                     v-for="option in GRID_OPTIONS"
                     :key="option.value"
                     :value="option.value"
-                    class="relative flex cursor-pointer items-center rounded px-3 py-2 text-sm text-slate-300 outline-none select-none data-[highlighted]:bg-slate-800 data-[highlighted]:text-slate-50 data-[state=checked]:text-vue-400"
+                    class="relative flex cursor-pointer items-center rounded px-3 py-2 text-sm text-slate-300 outline-none select-none data-[highlighted]:bg-slate-700 data-[highlighted]:text-slate-50 data-[state=checked]:text-vue-400"
                   >
                     <SelectItemText>{{ option.label }}</SelectItemText>
                     <SelectItemIndicator class="ml-auto pl-2 text-vue-400">✓</SelectItemIndicator>
@@ -115,14 +115,14 @@ const backToSetup = () => {
               <SelectContent
                 position="popper"
                 :side-offset="6"
-                class="z-50 min-w-[var(--reka-select-trigger-width)] overflow-hidden rounded-md border border-slate-700 bg-slate-900 shadow-xl"
+                class="z-50 min-w-[var(--reka-select-trigger-width)] overflow-hidden rounded-md border border-slate-600 bg-slate-800 shadow-2xl shadow-black/60 ring-1 ring-black/30"
               >
                 <SelectViewport class="p-1">
                   <SelectItem
                     v-for="option in DIFFICULTY_OPTIONS"
                     :key="option.value"
                     :value="option.value"
-                    class="relative flex cursor-pointer items-center rounded px-3 py-2 text-sm text-slate-300 outline-none select-none data-[highlighted]:bg-slate-800 data-[highlighted]:text-slate-50 data-[state=checked]:text-vue-400"
+                    class="relative flex cursor-pointer items-center rounded px-3 py-2 text-sm text-slate-300 outline-none select-none data-[highlighted]:bg-slate-700 data-[highlighted]:text-slate-50 data-[state=checked]:text-vue-400"
                   >
                     <SelectItemText>{{ option.label }}</SelectItemText>
                     <SelectItemIndicator class="ml-auto pl-2 text-vue-400">✓</SelectItemIndicator>
@@ -149,14 +149,14 @@ const backToSetup = () => {
               <SelectContent
                 position="popper"
                 :side-offset="6"
-                class="z-50 min-w-[var(--reka-select-trigger-width)] overflow-hidden rounded-md border border-slate-700 bg-slate-900 shadow-xl"
+                class="z-50 min-w-[var(--reka-select-trigger-width)] overflow-hidden rounded-md border border-slate-600 bg-slate-800 shadow-2xl shadow-black/60 ring-1 ring-black/30"
               >
                 <SelectViewport class="p-1">
                   <SelectItem
                     v-for="option in PATTERN_OPTIONS"
                     :key="option.value"
                     :value="option.value"
-                    class="relative flex cursor-pointer items-center rounded px-3 py-2 text-sm text-slate-300 outline-none select-none data-[highlighted]:bg-slate-800 data-[highlighted]:text-slate-50 data-[state=checked]:text-vue-400"
+                    class="relative flex cursor-pointer items-center rounded px-3 py-2 text-sm text-slate-300 outline-none select-none data-[highlighted]:bg-slate-700 data-[highlighted]:text-slate-50 data-[state=checked]:text-vue-400"
                   >
                     <SelectItemText>{{ option.label }}</SelectItemText>
                     <SelectItemIndicator class="ml-auto pl-2 text-vue-400">✓</SelectItemIndicator>

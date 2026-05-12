@@ -1,7 +1,19 @@
-import { TENSES, type SentencesIndex, type Tense } from '@entities/sentence'
+import {
+  TENSES,
+  type SentenceForm,
+  type SentenceForms,
+  type SentencesIndex,
+  type Tense,
+} from '@entities/sentence'
 
 const isTense = (value: string): value is Tense =>
   (TENSES as readonly string[]).includes(value)
+
+const FORM_MAP: Record<string, SentenceForm> = {
+  '+': 'affirmative',
+  '-': 'negative',
+  '?': 'question',
+}
 
 export const parseSentencesDoc = (raw: string): SentencesIndex => {
   const lines = raw.split('\n')
@@ -27,16 +39,20 @@ export const parseSentencesDoc = (raw: string): SentencesIndex => {
     }
 
     if (line.startsWith('#')) return
-
     if (!currentWord) return
 
     const parts = line.split(' | ').map((part) => part.trim())
-    if (parts.length !== 3) return
+    if (parts.length !== 4) return
 
-    const [tenseCode, en, ru] = parts
+    const [tenseCode, formKey, en, ru] = parts
     if (!isTense(tenseCode)) return
+    const form = FORM_MAP[formKey]
+    if (!form) return
 
-    result[currentWord][tenseCode] = { en, ru }
+    const wordBucket = result[currentWord]
+    const tenseBucket: SentenceForms = wordBucket[tenseCode] ?? {}
+    tenseBucket[form] = { en, ru }
+    wordBucket[tenseCode] = tenseBucket
   })
 
   return result

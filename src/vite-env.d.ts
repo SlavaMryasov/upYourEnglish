@@ -8,8 +8,9 @@ declare module '*.vue' {
 
 interface ImportMetaEnv {
   readonly VITE_VOCAB_DOC_ID: string
-  readonly VITE_SENTENCES_DOC_ID: string
   readonly VITE_TENSE_EXAMPLES_DOC_ID: string
+  readonly VITE_SENTENCES_MANIFEST_DOC_ID: string
+  readonly VITE_IRREGULAR_VERBS_DOC_ID: string
 }
 
 interface ImportMeta {

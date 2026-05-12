@@ -30,11 +30,19 @@ export const TENSE_LABELS: Record<Tense, string> = {
   future_perfect_continuous: 'Future Perfect Continuous',
 }
 
-export type SentenceForTense = {
-  en: string
-  ru: string
+export const SENTENCE_FORMS = ['affirmative', 'negative', 'question'] as const
+export type SentenceForm = (typeof SENTENCE_FORMS)[number]
+
+export const SENTENCE_FORM_LABELS: Record<SentenceForm, string> = {
+  affirmative: 'Утверждение',
+  negative: 'Отрицание',
+  question: 'Вопрос',
 }
 
-export type WordSentences = Partial<Record<Tense, SentenceForTense>>
+export type SentencePair = { en: string; ru: string }
+
+export type SentenceForms = Partial<Record<SentenceForm, SentencePair>>
+
+export type WordSentences = Partial<Record<Tense, SentenceForms>>
 
 export type SentencesIndex = Record<string, WordSentences>

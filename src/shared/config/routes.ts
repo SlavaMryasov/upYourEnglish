@@ -6,6 +6,6 @@ export const routes = {
   tenses: '/tenses',
   game: '/game',
   allWords: '/all-words',
-  learned: '/learned',
-  unlearned: '/unlearned',
+  irregularVerbs: '/irregular-verbs',
+  instructions: '/instructions',
 } as const

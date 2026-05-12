@@ -3,11 +3,11 @@ import {
   BuilderPage,
   CardsPage,
   GamePage,
-  LearnedWordsPage,
+  InstructionsPage,
+  IrregularVerbsPage,
   NotFoundPage,
   PlanPage,
   TensesPage,
-  UnlearnedWordsPage,
 } from '@pages/index'
 import { routes } from '@shared/config'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
@@ -20,8 +20,8 @@ const routeRecords: RouteRecordRaw[] = [
   { path: routes.tenses, component: TensesPage },
   { path: routes.game, component: GamePage },
   { path: routes.allWords, component: AllWordsPage },
-  { path: routes.learned, component: LearnedWordsPage },
-  { path: routes.unlearned, component: UnlearnedWordsPage },
+  { path: routes.irregularVerbs, component: IrregularVerbsPage },
+  { path: routes.instructions, component: InstructionsPage },
   { path: '/:pathMatch(.*)*', component: NotFoundPage },
 ]
 

@@ -85,6 +85,20 @@ const toggleHint = () => {
   isHintShown.value = !isHintShown.value
 }
 
+const isAutoCheck = ref(false)
+const toggleAutoCheck = () => {
+  isAutoCheck.value = !isAutoCheck.value
+}
+
+watch(
+  [() => shuffled.value.length, isAutoCheck],
+  ([len, auto]) => {
+    if (auto && len === 0 && placed.value.length > 0 && showResult.value === 'pending') {
+      check()
+    }
+  },
+)
+
 const tenseInfo = computed(() => findTenseByCode(props.tense))
 
 watch(
@@ -158,13 +172,27 @@ watch(
       </div>
     </div>
 
-    <button
-      type="button"
-      class="self-start rounded-md border border-vue-500/50 bg-vue-500/10 px-3 py-1.5 text-xs font-semibold text-vue-400 hover:bg-vue-500/20"
-      @click="toggleHint"
-    >
-      {{ isHintShown ? 'Скрыть грамматику' : 'Грамматика' }}
-    </button>
+    <div class="flex flex-wrap items-center gap-2">
+      <button
+        type="button"
+        class="rounded-md border border-vue-500/50 bg-vue-500/10 px-3 py-1.5 text-xs font-semibold text-vue-400 hover:bg-vue-500/20"
+        @click="toggleHint"
+      >
+        {{ isHintShown ? 'Скрыть грамматику' : 'Грамматика' }}
+      </button>
+      <button
+        type="button"
+        class="rounded-md border px-3 py-1.5 text-xs font-semibold transition"
+        :class="
+          isAutoCheck
+            ? 'border-vue-500 bg-vue-500/10 text-vue-400'
+            : 'border-slate-700 text-slate-400 hover:bg-slate-800'
+        "
+        @click="toggleAutoCheck"
+      >
+        Авто-проверка {{ isAutoCheck ? 'вкл' : 'выкл' }}
+      </button>
+    </div>
 
     <div
       v-if="isHintShown && tenseInfo"
@@ -219,7 +247,7 @@ watch(
         Ответ
       </button>
       <button
-        v-if="showResult === 'pending'"
+        v-if="showResult === 'pending' && !isAutoCheck"
         type="button"
         class="flex-1 rounded-xl border border-vue-500 bg-vue-500/10 px-3 py-3 text-sm font-semibold text-vue-400 hover:bg-vue-500/20"
         :disabled="shuffled.length > 0"

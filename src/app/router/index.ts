@@ -5,6 +5,7 @@ import {
   GamePage,
   InstructionsPage,
   IrregularVerbsPage,
+  MatchPage,
   NotFoundPage,
   PlanPage,
   TensesPage,
@@ -41,6 +42,7 @@ const routeRecords: RouteRecordRaw[] = [
   { path: routes.game, component: GamePage },
   { path: routes.allWords, component: AllWordsPage },
   { path: routes.irregularVerbs, component: IrregularVerbsPage },
+  { path: routes.match, component: MatchPage },
   { path: routes.instructions, component: InstructionsPage },
   { path: '/:pathMatch(.*)*', component: NotFoundPage },
 ]

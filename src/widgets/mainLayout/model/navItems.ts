@@ -1,5 +1,6 @@
 import { routes } from '@shared/config'
 import {
+  ArrowLeftRight,
   BookOpen,
   CalendarDays,
   Clock,
@@ -20,6 +21,7 @@ export type NavItem = {
 export const navItems: NavItem[] = [
   { label: 'Карточки', to: routes.cards, icon: SquareStack },
   { label: 'План', to: routes.plan, icon: CalendarDays },
+  { label: 'Соединялка', to: routes.match, icon: ArrowLeftRight },
   { label: 'Конструктор', to: routes.builder, icon: Puzzle },
   { label: 'Таблица времён', to: routes.tenses, icon: Clock },
   { label: 'Неправильные глаголы', to: routes.irregularVerbs, icon: Languages },

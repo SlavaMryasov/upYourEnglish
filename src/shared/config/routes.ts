@@ -7,5 +7,6 @@ export const routes = {
   game: '/game',
   allWords: '/all-words',
   irregularVerbs: '/irregular-verbs',
+  match: '/match',
   instructions: '/instructions',
 } as const

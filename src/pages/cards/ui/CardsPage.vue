@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { FlashCard, useFlashcardKeyboard, useFlashcardSession } from '@features/flashcard'
+import { usePreferencesStore } from '@features/preferences'
 import { useProgressStore } from '@features/progress'
+import { storeToRefs } from 'pinia'
 import { PageInfo } from '@shared/ui'
 import { BottomControls } from '@widgets/bottomControls'
 import { CardsHeader } from '@widgets/cardsHeader'
@@ -19,6 +21,8 @@ import { ref, useTemplateRef } from 'vue'
 
 const session = useFlashcardSession()
 const progressStore = useProgressStore()
+const preferences = usePreferencesStore()
+const { frontSide } = storeToRefs(preferences)
 
 const isResetOpen = ref(false)
 
@@ -107,8 +111,15 @@ useFlashcardKeyboard({
 
       <div
         v-if="deckWords.length > 0"
-        class="flex items-center justify-end gap-2 px-4 py-2"
+        class="flex flex-wrap items-center justify-end gap-2 px-4 py-2"
       >
+        <button
+          type="button"
+          class="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:bg-slate-800"
+          @click="preferences.toggleFrontSide"
+        >
+          {{ frontSide === 'en' ? 'EN → RU' : 'RU → EN' }}
+        </button>
         <button
           type="button"
           class="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:bg-slate-800"

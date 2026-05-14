@@ -6,7 +6,9 @@ import {
   type VerbFrequency,
 } from '@entities/verb'
 import { useFlashcardKeyboard } from '@features/flashcard'
+import { usePreferencesStore } from '@features/preferences'
 import { REQUIRED_VERB_STREAK, useVerbProgressStore } from '@features/verbProgress'
+import { storeToRefs } from 'pinia'
 import { useIrregularVerbsQuery } from '@shared/api'
 import { ConfirmDialog, PageInfo } from '@shared/ui'
 import { BottomControls } from '@widgets/bottomControls'
@@ -23,6 +25,8 @@ import VerbsList from './VerbsList.vue'
 const verbsQuery = useIrregularVerbsQuery()
 const verbs = computed<IrregularVerb[]>(() => verbsQuery.state.value.data ?? [])
 const verbProgress = useVerbProgressStore()
+const preferences = usePreferencesStore()
+const { frontSide } = storeToRefs(preferences)
 
 type ViewMode = 'list' | 'cards'
 const viewMode = ref<ViewMode>('list')
@@ -326,7 +330,14 @@ const refetch = () => {
                 · закрыто {{ closedCount }}/{{ deck.length }}
               </span>
             </span>
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
+              <button
+                type="button"
+                class="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:bg-slate-800"
+                @click="preferences.toggleFrontSide"
+              >
+                {{ frontSide === 'en' ? 'EN → RU' : 'RU → EN' }}
+              </button>
               <button
                 type="button"
                 class="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:bg-slate-800"

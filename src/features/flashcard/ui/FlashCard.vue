@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { usePreferencesStore } from '@features/preferences'
 import type { Word } from '@entities/word'
 import { FlipCard } from '@shared/ui'
-import { useTemplateRef } from 'vue'
+import { storeToRefs } from 'pinia'
+import { computed, useTemplateRef } from 'vue'
 import CardFace from './CardFace.vue'
 
-defineProps<{
+const props = defineProps<{
   word: Word
   position: number
   total: number
@@ -26,6 +28,27 @@ defineExpose({
   triggerKnown: () => flipCard.value?.triggerKnown(),
   triggerUnknown: () => flipCard.value?.triggerUnknown(),
 })
+
+const preferences = usePreferencesStore()
+const { frontSide } = storeToRefs(preferences)
+
+const front = computed(() =>
+  frontSide.value === 'en'
+    ? { main: props.word.en, sub: props.word.phrase }
+    : { main: props.word.translation, sub: props.word.phraseTranslation },
+)
+
+const back = computed(() =>
+  frontSide.value === 'en'
+    ? { main: props.word.translation, sub: props.word.phraseTranslation }
+    : { main: props.word.en, sub: props.word.phrase },
+)
+
+const hint = computed(() =>
+  frontSide.value === 'en'
+    ? 'тап — перевернуть · свайп вправо — знаю · влево — не знаю'
+    : 'тап — посмотреть слово · свайп вправо — знаю · влево — не знаю',
+)
 </script>
 
 <template>
@@ -41,9 +64,9 @@ defineExpose({
         :total="total"
         :streak="streak"
         :required="required"
-        :main="word.en"
-        :sub="word.phrase"
-        hint="тап — перевернуть · свайп вправо — знаю · влево — не знаю"
+        :main="front.main"
+        :sub="front.sub"
+        :hint="hint"
       />
     </template>
     <template #back>
@@ -53,8 +76,8 @@ defineExpose({
         :total="total"
         :streak="streak"
         :required="required"
-        :main="word.translation"
-        :sub="word.phraseTranslation"
+        :main="back.main"
+        :sub="back.sub"
         hint="tap to flip back"
       />
     </template>

@@ -4,7 +4,9 @@ import {
   VERB_FREQUENCY_LABELS,
   type IrregularVerb,
 } from '@entities/verb'
+import { usePreferencesStore } from '@features/preferences'
 import { FlipCard } from '@shared/ui'
+import { storeToRefs } from 'pinia'
 import { useTemplateRef } from 'vue'
 
 defineProps<{
@@ -27,6 +29,9 @@ defineExpose({
   triggerKnown: () => flipCard.value?.triggerKnown(),
   triggerUnknown: () => flipCard.value?.triggerUnknown(),
 })
+
+const preferences = usePreferencesStore()
+const { frontSide } = storeToRefs(preferences)
 </script>
 
 <template>
@@ -38,6 +43,7 @@ defineExpose({
   >
     <template #front>
       <article
+        v-if="frontSide === 'en'"
         class="flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl"
       >
         <div class="flex items-center gap-2">
@@ -56,9 +62,30 @@ defineExpose({
           тап — формы · свайп → знаю · ← не знаю
         </p>
       </article>
+      <article
+        v-else
+        class="flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl"
+      >
+        <div class="flex items-center gap-2">
+          <span
+            class="rounded-md border px-2 py-0.5 text-[10px] tracking-wide uppercase"
+            :class="VERB_FREQUENCY_BADGE_CLASS[verb.freq]"
+          >
+            {{ VERB_FREQUENCY_LABELS[verb.freq] }}
+          </span>
+          <span class="text-xs tabular-nums text-slate-500">
+            ✓ {{ streak }} / {{ required }}
+          </span>
+        </div>
+        <div class="text-4xl font-semibold text-slate-100">{{ verb.translation }}</div>
+        <p class="px-4 text-center text-xs tracking-wide text-slate-500 uppercase">
+          тап — формы · свайп → знаю · ← не знаю
+        </p>
+      </article>
     </template>
     <template #back>
       <article
+        v-if="frontSide === 'en'"
         class="flex h-full flex-col items-center justify-center gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl"
       >
         <div class="text-center text-xs tracking-wide text-slate-500 uppercase">
@@ -70,6 +97,20 @@ defineExpose({
           <span>{{ verb.v3 }}</span>
         </div>
         <div class="text-center text-sm text-slate-300">{{ verb.translation }}</div>
+      </article>
+      <article
+        v-else
+        class="flex h-full flex-col items-center justify-center gap-4 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl"
+      >
+        <div class="text-center text-xs tracking-wide text-slate-500 uppercase">
+          {{ verb.translation }}
+        </div>
+        <div class="text-center text-3xl font-bold text-vue-400">{{ verb.v1 }}</div>
+        <div class="text-center font-mono text-xl text-slate-100">
+          <span>{{ verb.v2 }}</span>
+          <span class="mx-2 text-slate-600">·</span>
+          <span>{{ verb.v3 }}</span>
+        </div>
       </article>
     </template>
   </FlipCard>

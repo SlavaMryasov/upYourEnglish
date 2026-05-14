@@ -3,7 +3,7 @@ import { useProgressStore } from '@features/progress'
 import { useVocabQuery } from '@shared/api'
 import { REQUIRED_STREAK_NEW, REQUIRED_STREAK_REPEAT } from '@shared/config'
 import { buildSchedule, findCurrentDay, getDayDeckIds } from '@shared/lib'
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 
 export const useFlashcardSession = () => {
   const query = useVocabQuery()
@@ -21,7 +21,7 @@ export const useFlashcardSession = () => {
     deck.mode.kind === 'day' ? deck.mode.day : currentDay.value,
   )
 
-  const deckIds = computed(() => {
+  const rawDeckIds = computed(() => {
     if (deck.mode.kind === 'custom') return deck.mode.ids
     if (!schedule.value) return []
     if (deck.mode.kind === 'today') {
@@ -34,6 +34,32 @@ export const useFlashcardSession = () => {
     }
     return []
   })
+
+  watch(rawDeckIds, (next, prev) => {
+    if (deck.shuffleOrder && next.length !== prev.length) deck.setShuffleOrder(null)
+  })
+
+  const deckIds = computed(() => {
+    const raw = rawDeckIds.value
+    const order = deck.shuffleOrder
+    if (!order || order.length !== raw.length) return raw
+    return order.map((idx) => raw[idx]).filter((id): id is number => id !== undefined)
+  })
+
+  const isShuffled = computed(() => deck.shuffleOrder !== null)
+
+  const shuffle = () => {
+    const indices = rawDeckIds.value.map((_, idx) => idx)
+    for (let i = indices.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[indices[i], indices[j]] = [indices[j], indices[i]]
+    }
+    deck.setShuffleOrder(indices)
+  }
+
+  const resetShuffle = () => {
+    deck.setShuffleOrder(null)
+  }
 
   const deckWords = computed(() =>
     deckIds.value.flatMap((id) => {
@@ -131,5 +157,8 @@ export const useFlashcardSession = () => {
     onUnknown,
     isCustomPickerMode,
     setCustomIds,
+    isShuffled,
+    shuffle,
+    resetShuffle,
   }
 }

@@ -12,15 +12,22 @@ export type DeckMode =
 export const useDeckStore = defineStore('deck', () => {
   const mode = ref<DeckMode>({ kind: 'today' })
   const pos = ref(0)
+  const shuffleOrder = ref<number[] | null>(null)
 
   const setMode = (next: DeckMode) => {
     mode.value = next
     pos.value = 0
+    shuffleOrder.value = null
   }
 
   const setPos = (next: number) => {
     pos.value = Math.max(0, next)
   }
 
-  return { mode, pos, setMode, setPos }
+  const setShuffleOrder = (order: number[] | null) => {
+    shuffleOrder.value = order
+    pos.value = 0
+  }
+
+  return { mode, pos, shuffleOrder, setMode, setPos, setShuffleOrder }
 })

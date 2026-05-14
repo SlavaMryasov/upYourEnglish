@@ -36,6 +36,7 @@ const {
   completedCount,
   position,
   isCustomPickerMode,
+  isShuffled,
 } = session
 
 const flashCard = useTemplateRef<{
@@ -104,6 +105,27 @@ useFlashcardKeyboard({
     <template v-else>
       <CardsHeader :completed="completedCount" :total="deckWords.length" />
 
+      <div
+        v-if="deckWords.length > 0"
+        class="flex items-center justify-end gap-2 px-4 py-2"
+      >
+        <button
+          type="button"
+          class="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:bg-slate-800"
+          @click="session.shuffle"
+        >
+          Перемешать
+        </button>
+        <button
+          v-if="isShuffled"
+          type="button"
+          class="rounded-md border border-slate-700 px-3 py-1 text-xs text-slate-300 hover:bg-slate-800"
+          @click="session.resetShuffle"
+        >
+          Сбросить порядок
+        </button>
+      </div>
+
       <div class="flex min-h-0 flex-1 items-center justify-center p-4">
         <div v-if="deckWords.length === 0" class="text-sm text-slate-400">
           В этой колоде ничего нет
@@ -116,7 +138,10 @@ useFlashcardKeyboard({
           <div class="text-xl font-semibold">Готово</div>
           <div class="text-sm text-slate-500">Все {{ deckWords.length }} слов закрыты</div>
         </div>
-        <div v-else class="w-full max-w-[220px] max-h-full sm:max-w-[300px] md:max-w-[340px]">
+        <div
+          v-else
+          class="aspect-[5/7] h-full max-h-[480px] max-w-[220px] sm:max-w-[300px] md:max-w-[340px]"
+        >
           <FlashCard
             v-if="currentWord"
             ref="flashCard"

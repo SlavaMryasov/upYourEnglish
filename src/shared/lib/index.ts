@@ -1,9 +1,9 @@
 export {
   buildSchedule,
+  findCurrentDay,
   getDayDeckIds,
-  getFirstNIds,
-  getIntroductionDay,
   getStatusIds,
+  todayISO,
   type DaySchedule,
   type Repetition,
   type ScheduleResult,

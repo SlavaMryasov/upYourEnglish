@@ -8,4 +8,5 @@ export type Word = {
   phrase: string
   phraseTranslation: string
   status: WordStatus
+  introductionDate: string | null
 }

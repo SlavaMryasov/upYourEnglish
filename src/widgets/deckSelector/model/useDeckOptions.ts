@@ -1,7 +1,6 @@
 import { type DeckMode, useDeckStore } from '@features/deck'
 import { useVocabQuery } from '@shared/api'
-import { getCurrentDay } from '@shared/config'
-import { buildSchedule } from '@shared/lib'
+import { buildSchedule, findCurrentDay } from '@shared/lib'
 import { computed } from 'vue'
 
 export type DeckOption = { value: string; label: string; mode: DeckMode }
@@ -18,20 +17,35 @@ export const useDeckOptions = () => {
 
   const words = computed(() => state.value.data ?? [])
   const schedule = computed(() => (words.value.length > 0 ? buildSchedule(words.value) : null))
-  const currentDay = computed(() => getCurrentDay())
+  const currentDay = computed(() =>
+    schedule.value ? findCurrentDay(schedule.value.schedule) : 0,
+  )
 
   const options = computed<DeckOption[]>(() => {
     const list: DeckOption[] = [
-      { value: 'today', label: 'Сегодня', mode: { kind: 'today' } },
       { value: 'custom', label: 'Свободное повторение', mode: { kind: 'custom', ids: [] } },
     ]
-    if (!schedule.value) return list
+    if (!schedule.value) {
+      list.unshift({ value: 'today', label: 'Сегодня', mode: { kind: 'today' } })
+      return list
+    }
+
+    let todayInserted = false
 
     schedule.value.schedule.forEach((daySchedule) => {
-      if (daySchedule.day === currentDay.value) return
-
+      const isToday = daySchedule.day === currentDay.value
       const newCount = daySchedule.newIds.length
       const repCount = daySchedule.repetitions.reduce((sum, rep) => sum + rep.ids.length, 0)
+
+      if (isToday) {
+        const parts = ['Сегодня']
+        if (newCount > 0) parts.push(`+${newCount} нов`)
+        if (repCount > 0) parts.push(`${repCount} повт`)
+        list.push({ value: 'today', label: parts.join(' · '), mode: { kind: 'today' } })
+        todayInserted = true
+        return
+      }
+
       if (newCount === 0 && repCount === 0) return
 
       const parts = [fmt.format(daySchedule.date)]
@@ -44,6 +58,10 @@ export const useDeckOptions = () => {
         mode: { kind: 'day', day: daySchedule.day },
       })
     })
+
+    if (!todayInserted) {
+      list.unshift({ value: 'today', label: 'Сегодня', mode: { kind: 'today' } })
+    }
 
     return list
   })

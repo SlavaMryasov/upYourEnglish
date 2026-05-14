@@ -1,12 +1,8 @@
 import { useDeckStore } from '@features/deck'
 import { useProgressStore } from '@features/progress'
 import { useVocabQuery } from '@shared/api'
-import {
-  REQUIRED_STREAK_NEW,
-  REQUIRED_STREAK_REPEAT,
-  getCurrentDay,
-} from '@shared/config'
-import { buildSchedule, getDayDeckIds, getIntroductionDay } from '@shared/lib'
+import { REQUIRED_STREAK_NEW, REQUIRED_STREAK_REPEAT } from '@shared/config'
+import { buildSchedule, findCurrentDay, getDayDeckIds } from '@shared/lib'
 import { computed } from 'vue'
 
 export const useFlashcardSession = () => {
@@ -15,8 +11,11 @@ export const useFlashcardSession = () => {
   const progress = useProgressStore()
 
   const words = computed(() => query.state.value.data ?? [])
+  const wordsById = computed(() => new Map(words.value.map((word) => [word.id, word])))
   const schedule = computed(() => (words.value.length > 0 ? buildSchedule(words.value) : null))
-  const currentDay = computed(() => getCurrentDay())
+  const currentDay = computed(() =>
+    schedule.value ? findCurrentDay(schedule.value.schedule) : 0,
+  )
 
   const effectiveDay = computed(() =>
     deck.mode.kind === 'day' ? deck.mode.day : currentDay.value,
@@ -36,17 +35,24 @@ export const useFlashcardSession = () => {
     return []
   })
 
-  const deckWords = computed(() => {
-    const byId = new Map(words.value.map((word) => [word.id, word]))
-    return deckIds.value.flatMap((id) => {
-      const word = byId.get(id)
+  const deckWords = computed(() =>
+    deckIds.value.flatMap((id) => {
+      const word = wordsById.value.get(id)
       return word ? [word] : []
-    })
+    }),
+  )
+
+  const effectiveIso = computed(() => {
+    if (!schedule.value || effectiveDay.value < 1) return null
+    const entry = schedule.value.schedule.find((item) => item.day === effectiveDay.value)
+    return entry?.iso ?? null
   })
 
   const requiredFor = (wordId: number): number => {
     if (deck.mode.kind === 'custom') return REQUIRED_STREAK_NEW
-    return getIntroductionDay(wordId) === effectiveDay.value
+    const word = wordsById.value.get(wordId)
+    if (!word || !word.introductionDate || !effectiveIso.value) return REQUIRED_STREAK_REPEAT
+    return word.introductionDate === effectiveIso.value
       ? REQUIRED_STREAK_NEW
       : REQUIRED_STREAK_REPEAT
   }

@@ -6,8 +6,7 @@ import {
   TENSE_LABELS,
 } from '@entities/sentence'
 import { SentenceBuilder, TenseMultiselect, useBuilderSession } from '@features/builder'
-import { getCurrentDay } from '@shared/config'
-import { buildSchedule, getDayDeckIds } from '@shared/lib'
+import { buildSchedule, findCurrentDay, getDayDeckIds } from '@shared/lib'
 import { PageInfo } from '@shared/ui'
 import {
   PopoverContent,
@@ -53,7 +52,9 @@ const isLoading = computed(() => vocab.isLoading.value || manifestQuery.isLoadin
 const error = computed(() => vocab.error.value ?? manifestQuery.error.value)
 
 const schedule = computed(() => (words.value.length > 0 ? buildSchedule(words.value) : null))
-const currentDay = computed(() => getCurrentDay())
+const currentDay = computed(() =>
+  schedule.value ? findCurrentDay(schedule.value.schedule) : 0,
+)
 
 const fmt = new Intl.DateTimeFormat('ru-RU', {
   day: 'numeric',

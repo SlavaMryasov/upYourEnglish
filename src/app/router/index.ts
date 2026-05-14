@@ -52,6 +52,16 @@ export const router = createRouter({
   routes: routeRecords,
 })
 
+let isInitialNavigation = true
+
+router.beforeEach((to) => {
+  if (!isInitialNavigation) return
+  isInitialNavigation = false
+  const last = readLastRoute()
+  if (!last || last === to.fullPath) return
+  return last
+})
+
 router.afterEach((to) => {
   if (to.path && to.path !== routes.root) writeLastRoute(to.fullPath)
 })
